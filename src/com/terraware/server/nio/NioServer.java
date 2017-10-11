@@ -15,8 +15,11 @@ import java.util.Objects;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class NioServer implements Runnable {
+    private static final Logger log = getLoggerName(NioServer.class);
     // The host:port combination to listen on
     private InetAddress hostAddress;
     private int port;
@@ -38,14 +41,18 @@ public class NioServer implements Runnable {
     // Maps a SocketChannel to a list of ByteBuffer instances
     private final Map<SocketChannel,Queue<ByteBuffer>> pendingData = new ConcurrentHashMap<>();
 
-    private NioServer(InetAddress hostAddress, Integer port, EchoWorker worker) throws IOException {
-        this.hostAddress = Objects.requireNonNull(hostAddress, "hostAddress");
-        this.port = Objects.requireNonNull(port, "port");
-        this.worker = Objects.requireNonNull(worker, "worker");
+    public NioServer(InetAddress hostAddress, Integer port, EchoWorker worker) throws IOException {
+        this.hostAddress = Objects.requireNonNull(hostAddress, "hostAddress cannot be null");
+        this.port = Objects.requireNonNull(port, "port cannot be null");
+        this.worker = Objects.requireNonNull(worker, "worker cannot be null");
         this.selector = this.initSelector();
     }
 
-    void send(SocketChannel socket, byte[] data) {
+    static Logger getLoggerName(Class<?> clazz) {
+        return Logger.getLogger(clazz.getName());
+    }
+
+    public void send(SocketChannel socket, byte[] data) {
 
         // Indicate we want the interest ops set changed
         pendingChanges.add(new ChangeRequest(socket, ChangeRequest.CHANGEOPS, SelectionKey.OP_WRITE));
@@ -105,8 +112,10 @@ public class NioServer implements Runnable {
         // For an accept to be pending the channel must be a server socket channel.
         ServerSocketChannel serverSocketChannel = (ServerSocketChannel) key.channel();
 
+
         // Accept the connection and make it non-blocking
         SocketChannel socketChannel = serverSocketChannel.accept();
+        log.info("Accepting connection from " + socketChannel.getRemoteAddress());
         socketChannel.configureBlocking(false);
 
         // Register the new SocketChannel with our Selector, indicating
@@ -129,6 +138,9 @@ public class NioServer implements Runnable {
             // the selection key and close the channel.
             key.cancel();
             socketChannel.close();
+            log.info("Close connection");
+            log.info("Contains:" + pendingData.containsKey(socketChannel) + "");
+            pendingData.remove(socketChannel);
             return;
         }
 
@@ -137,6 +149,9 @@ public class NioServer implements Runnable {
             // same from our end and cancel the channel.
             key.channel().close();
             key.cancel();
+            log.info("Close connection");
+            log.info("Contains:" + pendingData.containsKey(socketChannel) + "");
+            pendingData.remove(socketChannel);
             return;
         }
 
@@ -169,15 +184,16 @@ public class NioServer implements Runnable {
     }
 
     private Selector initSelector() throws IOException {
+        log.info(" initSelector");
         // Create a new selector
         Selector socketSelector = SelectorProvider.provider().openSelector();
 
         // Create a new non-blocking server socket channel
-        this.serverChannel = ServerSocketChannel.open();
+        serverChannel = ServerSocketChannel.open();
         serverChannel.configureBlocking(false);
 
         // Bind the server socket to the specified address and port
-        InetSocketAddress isa = new InetSocketAddress(this.hostAddress, this.port);
+        InetSocketAddress isa = new InetSocketAddress(hostAddress, port);
         serverChannel.socket().bind(isa);
 
         // Register the server socket channel, indicating an interest in
@@ -191,9 +207,11 @@ public class NioServer implements Runnable {
         try {
             EchoWorker worker = new EchoWorker();
             new Thread(worker).start();
-            new Thread(new NioServer(null, 9090, worker)).start();
+            Thread t = new Thread(new NioServer(InetAddress.getByName(args[0]), 9090, worker));
+            t.setName("Server-Thread");
+            t.start();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.log(Level.WARNING, "", e);
         }
     }
 }

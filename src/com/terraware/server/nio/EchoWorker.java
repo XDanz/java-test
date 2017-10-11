@@ -3,9 +3,19 @@ package com.terraware.server.nio;
 import java.nio.channels.SocketChannel;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.logging.Logger;
 
 public class EchoWorker implements Runnable {
-    private final BlockingQueue<ServerDataEvent> queue = new LinkedBlockingQueue<>();
+    private static final Logger log = Logger.getLogger(NioServer.class.getName());
+    private BlockingQueue<ServerDataEvent> queue = new LinkedBlockingQueue<>();
+
+    public EchoWorker(BlockingQueue<ServerDataEvent> queue) {
+        this.queue = queue;
+    }
+
+    public EchoWorker() {
+
+    }
 
     void processData(NioServer server, SocketChannel socket, byte[] data, int count) {
         byte[] dataCopy = new byte[count];
@@ -22,7 +32,7 @@ public class EchoWorker implements Runnable {
                     // Wait for data to become available
 
                     // TODO: handle
-
+                    log.info( "sending");
                     // Return to sender
                     dataEvent.server.send(dataEvent.socket, dataEvent.data);
                 }

@@ -2,7 +2,7 @@
 <project name="java-test" default="all">
   
   
-  <property file="java-test.properties"/>
+  <property file="java-test2.properties"/>
   <!-- Uncomment the following property if no tests compilation is needed -->
   <!-- 
   <property name="skip.tests" value="true"/>
@@ -12,7 +12,7 @@
   
   <property name="compiler.debug" value="on"/>
   <property name="compiler.generate.no.warnings" value="off"/>
-  <property name="compiler.args" value="-source 8"/>
+  <property name="compiler.args" value=""/>
   <property name="compiler.max.memory" value="700m"/>
   <patternset id="ignored.files">
     <exclude name="**/*.hprof/**"/>
@@ -85,23 +85,22 @@
   <property name="project.jdk.home" value="${jdk.home.1.8}"/>
   <property name="project.jdk.bin" value="${jdk.bin.1.8}"/>
   <property name="project.jdk.classpath" value="jdk.classpath.1.8"/>
-  <!-- Register Custom Compiler Taskdefs -->
-  <property name="javac2.home" value="${idea.home}/lib"/>
-  <path id="javac2.classpath">
-    <pathelement location="${javac2.home}/javac2.jar"/>
-    <pathelement location="${javac2.home}/jdom.jar"/>
-    <pathelement location="${javac2.home}/asm-all.jar"/>
-    <pathelement location="${javac2.home}/jgoodies-forms.jar"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.org.mockito:mockito-all:1.10.19.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/mockito/mockito-all/1.10.19/mockito-all-1.10.19.jar"/>
   </path>
-  <target name="register.custom.compilers">
-    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
-    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
-  </target>
+  
+  
+  <!-- Global Libraries -->
   
   <!-- Modules -->
   
   <import file="${basedir}/module_java-test.xml"/>
-  
+  <import file="${basedir}/build.xml"/>
+
   <target name="init" description="Build initialization">
     <!-- Perform any build initialization in this target -->
   </target>
@@ -112,5 +111,15 @@
   
   <target name="all" depends="build.modules" description="build all"/>
 
+  <!-- -->
+  <target name="test"
+          depends="compile.module.java-test"
+          description="Start NioServer" >
+    <java classname="com.terraware.server.nio.NioServer"
+          failonerror="true"
+          fork="true">
+      <classpath location="${java-test.output.dir}"/>
+    </java>
+  </target>
 
 </project>

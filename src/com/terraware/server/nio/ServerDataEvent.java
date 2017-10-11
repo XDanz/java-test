@@ -1,7 +1,7 @@
 package com.terraware.server.nio;
 import java.nio.channels.SocketChannel;
 
-class ServerDataEvent {
+public class ServerDataEvent {
     public NioServer server;
     public SocketChannel socket;
     public byte[] data;
