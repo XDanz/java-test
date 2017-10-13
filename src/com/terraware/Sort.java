@@ -1,5 +1,9 @@
 package com.terraware;
 
+import javafx.util.Pair;
+
+import java.util.*;
+
 /**
  * @author Daniel Terranova <mailto:daniel.terranova@so4it.com>
  * @since 0.8.0
@@ -31,6 +35,49 @@ public class Sort {
             }
         }
         return arr;
+    }
+
+    static List<Pair<Integer,Integer>> doInvertions(int[] arr) {
+        List<Pair<Integer,Integer>> pairs  = new ArrayList<>();
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = i+1; j < arr.length; j++) {
+                if (arr[i] > arr[j])
+                    pairs.add(new Pair<>(arr[i], arr[j]));
+
+            }
+        }
+        return pairs;
+    }
+
+    static int[] fib(int count) {
+        int[] fibs = new int[count];
+        fibs[0] = 0;
+        fibs[1] = 1;
+        for (int i = 2; i < count; i++) {
+           fibs[i] = fibs[i-1] + fibs[i-2];
+        }
+        return fibs;
+    }
+
+    static boolean validate(String longString, String word) {
+        SortedSet<Integer> pos = new TreeSet<>();
+        for (char c : word.toCharArray()) {
+            if(!validate(longString, c, pos))
+                return false;
+        }
+        System.out.println("pos = " + pos);
+        return true;
+    }
+
+    private static boolean validate(String longString, char c, Set<Integer> pos) {
+        char[] chars = longString.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            if (!pos.contains(i) && c == chars[i]) {
+                pos.add(i);
+                return true;
+            }
+        }
+        return false;
     }
 
     private static int max(int[] arr, int offset, int currentMax) {
