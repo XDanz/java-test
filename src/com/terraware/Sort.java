@@ -54,7 +54,7 @@ public class Sort {
         fibs[0] = 0;
         fibs[1] = 1;
         for (int i = 2; i < count; i++) {
-           fibs[i] = fibs[i-1] + fibs[i-2];
+            fibs[i] = fibs[i-1] + fibs[i-2];
         }
         return fibs;
     }
@@ -103,5 +103,41 @@ public class Sort {
         temp = a[i];
         a[i] = a[j];
         a[j] = temp;
+    }
+
+    static void rotate(int[] arr, int pos) {
+        int r = arr[0];
+        for ( ;pos > 0; pos-- ) {
+
+            for (int i = 1; i < arr.length+1; i++) {
+                int t = r;
+                int index = i % arr.length;
+                r = arr[index];
+                System.out.println("r=" + r);
+                System.out.println("arr[" + index + "]=" + t);
+                arr[index] = t;
+            }
+            r = arr[0];
+            System.out.println("****** ");
+        }
+    }
+
+    static int wordCount(String w) {
+        char[] arr = w.toCharArray();
+        boolean b = false;
+        int c = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if(arr[i] == ' ') {
+                if (b) {
+                  c++;
+                  b = false;
+                }
+            } else {
+                b = true;
+                if (i == arr.length - 1)
+                    c++;
+            }
+        }
+        return c;
     }
 }

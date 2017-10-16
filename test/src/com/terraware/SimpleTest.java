@@ -139,6 +139,18 @@ class SimpleTest {
     }
 
     @Test
+    void testWC() {
+        System.out.println("WC = " + Sort.wordCount("manchester united is also known as red devil"));
+    }
+
+    @Test
+    void testRotate() {
+        int[] arr = {1,2,3,4,5};
+        Sort.rotate(arr,5);
+        Assertions.assertEquals(new int[] { 1,2,3,4,5 }, arr);
+    }
+
+    @Test
     void testValidate() {
         Assertions.assertTrue(Sort.validate("allanballan", "banan"));
         Assertions.assertTrue(Sort.validate("allanballan", "llll"));
