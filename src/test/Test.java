@@ -1,13 +1,13 @@
 package test;
 
-import com.terraware.Sort;
+import com.terraware.ArrayUtil;
 
 import java.util.Arrays;
 
 public class Test {
 
     public void test ( String arg[]) {
-        Sort s = new Sort();
+        ArrayUtil s = new ArrayUtil();
         System.out.println ( " Hello!" );
         int[] arr1 = {10,34,2,56,7,67,88,42};
         int[] arr2 = s.doInsertionSort(arr1);

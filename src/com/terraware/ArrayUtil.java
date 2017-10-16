@@ -8,9 +8,7 @@ import java.util.*;
  * @author Daniel Terranova <mailto:daniel.terranova@so4it.com>
  * @since 0.8.0
  */
-public class Sort {
-
-    public Sort() {}
+public class ArrayUtil {
 
     public static int[] doInsertionSort(int[] input) {
         for (int i = 1; i < input.length; i++) {
@@ -94,9 +92,6 @@ public class Sort {
         }
     }
 
-
-
-
     static int max(int[] arr) {
         return max(arr, 0, Integer.MIN_VALUE);
     }
@@ -111,17 +106,13 @@ public class Sort {
     static void rotate(int[] arr, int pos) {
         int r = arr[0];
         for ( ;pos > 0; pos-- ) {
-
             for (int i = 1; i < arr.length+1; i++) {
                 int t = r;
                 int index = i % arr.length;
                 r = arr[index];
-                System.out.println("r=" + r);
-                System.out.println("arr[" + index + "]=" + t);
                 arr[index] = t;
             }
             r = arr[0];
-            System.out.println("****** ");
         }
     }
 
@@ -132,8 +123,8 @@ public class Sort {
         for (int i = 0; i < arr.length; i++) {
             if(arr[i] == ' ') {
                 if (b) {
-                  c++;
-                  b = false;
+                    c++;
+                    b = false;
                 }
             } else {
                 b = true;

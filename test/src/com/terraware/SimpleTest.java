@@ -32,28 +32,28 @@ class SimpleTest {
     public void testBubbleSort() {
         int[] input = { 4, 2, 9, 6, 23, 12, 34, 0, 1 };
 
-        System.out.println(Arrays.toString(Sort.doBubbleSort(input)));
+        System.out.println(Arrays.toString(ArrayUtil.doBubbleSort(input)));
     }
 
     @Test
     public void testInsertSort() {
         int[] input = { 4, 2, 9, 6, 23, 12, 34, 0, 1 };
 
-        System.out.println(Arrays.toString(Sort.doInsertionSort(input)));
+        System.out.println(Arrays.toString(ArrayUtil.doInsertionSort(input)));
     }
 
     @Test
     public void testRecursiveMax() {
         int[] input = { 4, 2, 9, 6, 23, 12, 34, 35, 1 };
 
-        System.out.println("Max=" + Sort.max(input));
+        System.out.println("Max=" + ArrayUtil.max(input));
     }
 
     @Test
     public void testInvertions() {
         int[] input = { 4, 2, 9, 6, 23, 12, 34, 35, 1 };
 
-        for (Pair<Integer, Integer> pair : Sort.doInvertions(input)) {
+        for (Pair<Integer, Integer> pair : ArrayUtil.doInvertions(input)) {
             System.out.println("pair = " + pair);
         }
 
@@ -135,19 +135,33 @@ class SimpleTest {
 
     @Test
     void testFibs() {
-        System.out.println("Sort.fib(10) = " + Arrays.toString(Sort.fib(10)));
+        System.out.println("ArrayUtil.fib(10) = " + Arrays.toString(ArrayUtil.fib(10)));
     }
 
     @Test
     void testWC() {
-        System.out.println("WC = " + Sort.wordCount("manchester united is also known as red devil"));
+        System.out.println("WC = " + ArrayUtil.wordCount("manchester united is also known as red devil"));
     }
 
     @Test
-    void testRotate() {
+    void testRotate_five_step() {
         int[] arr = {1,2,3,4,5};
-        Sort.rotate(arr,5);
-        Assertions.assertEquals(new int[] { 1,2,3,4,5 }, arr);
+        ArrayUtil.rotate(arr,5);
+        assertArrayElementEquals(new int[] { 1,2,3,4,5 }, arr);
+    }
+
+    @Test
+    void testRotate_one_step() {
+        int[] arr = { 1, 2, 3, 4, 5};
+        ArrayUtil.rotate(arr,1);
+        assertArrayElementEquals(new int[] {5,1,2,3,4}, arr);
+    }
+
+    @Test
+    void testRotate_two_step() {
+        int[] arr = { 1,2,3,4, 5};
+        ArrayUtil.rotate(arr,2);
+        assertArrayElementEquals(new int[] {4,5,1,2,3}, arr);
     }
 
     @Test
@@ -194,11 +208,21 @@ class SimpleTest {
 
     @Test
     void testValidate() {
-        Assertions.assertTrue(Sort.validate("allanballan", "banan"));
-        Assertions.assertTrue(Sort.validate("allanballan", "llll"));
+        Assertions.assertTrue(ArrayUtil.validate("allanballan", "banan"));
+        Assertions.assertTrue(ArrayUtil.validate("allanballan", "llll"));
     }
 
     Date toDate(LocalDate localDate) {
         return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
+
+    private void assertArrayElementEquals(int[] expected, int[] actual) {
+        if (expected.length != actual.length)
+            Assertions.fail(String.format("length differs: expected: %s, acutal",expected.length, actual.length ));
+
+        for (int i = 0; i < expected.length; i++) {
+            if (expected[i] != actual[i])
+                Assertions.fail(String.format("element differs: expected: %s, acutal",expected[i], actual[i] ));
+        }
     }
 }
