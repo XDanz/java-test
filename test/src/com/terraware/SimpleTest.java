@@ -30,7 +30,7 @@ class SimpleTest {
 
     @Test
     public void testBubbleSort() {
-            int[] input = { 4, 2, 9, 6, 23, 12, 34, 0, 1 };
+        int[] input = { 4, 2, 9, 6, 23, 12, 34, 0, 1 };
 
         System.out.println(Arrays.toString(Sort.doBubbleSort(input)));
     }
@@ -148,6 +148,48 @@ class SimpleTest {
         int[] arr = {1,2,3,4,5};
         Sort.rotate(arr,5);
         Assertions.assertEquals(new int[] { 1,2,3,4,5 }, arr);
+    }
+
+    @Test
+    void test2() {
+        int[] arr = { 1, 1, 3, 3, 3};
+
+        HashMap<Integer,Integer> map  = new HashMap<>();
+        for (int i = 0; i < arr.length; i++) {
+            if (map.containsKey(arr[i]))
+                map.replace(arr[i], map.get(arr[i])+1);
+            else
+                map.put(arr[i], 1);
+        }
+        for (Map.Entry<Integer, Integer> e : map.entrySet()) {
+            if (e.getValue() >= 2 )
+                System.out.println("dup = " + e.getKey() );
+        }
+    }
+
+    @Test
+    void namess() {
+        int[] arr = { 1 ,1};
+        Arrays.sort(arr);
+        for (int i = 0; i < arr.length-1; i++) {
+            if (arr[i]-arr[i+1] == 0)
+                System.out.println("i = " + arr[i]);
+        }
+    }
+
+    @Test
+    void namezz() {
+        int[] arr = { 8, 1, 1, 3, 3, 3, 3, 2, 2, 4, 8};
+        Set<Integer> set = new HashSet<>();
+        for (int i : arr) {
+            if (!set.contains(i))
+                set.add(i);
+            else {
+                System.out.println("dup:" + i);
+                set.remove(i);
+            }
+        }
+        System.out.println("set = " + set);
     }
 
     @Test
