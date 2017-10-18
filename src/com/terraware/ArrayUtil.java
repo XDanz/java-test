@@ -96,6 +96,17 @@ public class ArrayUtil {
         return max(arr, 0, Integer.MIN_VALUE);
     }
 
+    public static String reverseString(String str) {
+        String reverse = "";
+        if (str.length() == 1) {
+            return str;
+        } else {
+            reverse += str.charAt(str.length()-1)
+                    + reverseString(str.substring(0,str.length()-1));
+            return reverse;
+        }
+    }
+
     private static void iswap(int i, int j, int[] a) {
         int temp;
         temp = a[i];
