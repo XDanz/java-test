@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentSkipListSet;
  * @author Daniel Terranova <mailto:daniel.terranova@so4it.com>
  * @since 0.8.0
  */
-class SimpleTest {
+class ArrayUtilTest {
 
 
     @Test
@@ -132,11 +132,6 @@ class SimpleTest {
         System.out.println("original = " + original.floor(toDate(LocalDate.of(2018, 12, 2))));
     }
 
-    @Test
-    void testReverseString() {
-        String s = "Daniel";
-        Assertions.assertEquals("leinaD", Sort.reverseString(s));
-    }
 
     @Test
     void testDuplicateNumber() {
@@ -169,11 +164,6 @@ class SimpleTest {
     @Test
     void testFibs() {
         System.out.println("ArrayUtil.fib(10) = " + Arrays.toString(ArrayUtil.fib(10)));
-    }
-
-    @Test
-    void testWC() {
-        System.out.println("WC = " + ArrayUtil.wordCount("manchester united is also known as red devil"));
     }
 
     @Test
@@ -239,11 +229,6 @@ class SimpleTest {
         System.out.println("set = " + set);
     }
 
-    @Test
-    void testValidate() {
-        Assertions.assertTrue(ArrayUtil.validate("allanballan", "banan"));
-        Assertions.assertTrue(ArrayUtil.validate("allanballan", "llll"));
-    }
 
     Date toDate(LocalDate localDate) {
         return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
