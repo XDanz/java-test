@@ -1,12 +1,13 @@
 package com.terraware;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Test;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertEquals;
+
 
 /**
  * @author Daniel Terranova <mailto:daniel.terranova@so4it.com>
@@ -15,24 +16,24 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class StringUtilTest {
 
     @Test
-    void testWC() {
+    public void testWC() {
         System.out.println("WC = " + StringUtil.wordCount("manchester united is also known as red devil"));
     }
 
     @Test
-    void testValidate() {
-        assertTrue(StringUtil.validate("allanballan", "banan"));
-        assertTrue(StringUtil.validate("allanballan", "llll"));
+    public void testValidate() {
+        Assert.assertTrue(StringUtil.validate("allanballan", "banan"));
+        Assert.assertTrue(StringUtil.validate("allanballan", "llll"));
     }
 
     @Test
-    void testReverseString() {
+    public void testReverseString() {
         String s = "Daniel";
-        Assertions.assertEquals("leinaD", StringUtil.reverseString(s));
+        assertEquals("leinaD", StringUtil.reverseString(s));
     }
 
     @Test
-    void name() {
+    public void name() {
         ConcurrentSkipListMap<String, String> map = new ConcurrentSkipListMap<>();
         map.put("Daniel", "Terranova");
         map.put("Lena", "Andersson");
@@ -62,6 +63,16 @@ public class StringUtilTest {
             System.out.println("\tsize = " + map.size());
 
         }
+
+    }
+
+    @Test
+    public void testMoa() {
+        String namn = "Moa Andersson";
+
+
+            System.out.println(namn);
+
 
     }
 }

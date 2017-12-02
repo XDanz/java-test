@@ -3,8 +3,8 @@ package com.terraware;
 import com.terraware.server.nio.EchoWorker;
 import com.terraware.server.nio.NioServer;
 import com.terraware.server.nio.ServerDataEvent;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.io.IOException;
@@ -23,13 +23,10 @@ import static org.mockito.Mockito.verify;
 public class NiServerTest {
     BlockingQueue<ServerDataEvent> queue;
 
-    @BeforeEach
-    void setUp() throws Exception {
 
-    }
-
+    @Ignore
     @Test
-    void testThatWeCallSend() throws UnknownHostException, InterruptedException {
+    public void testThatWeCallSend() throws UnknownHostException, InterruptedException {
         queue = new LinkedBlockingQueue<>();
         NioServer nioServer = Mockito.mock(NioServer.class);
         SocketChannel socketChannel = Mockito.mock(SocketChannel.class);
@@ -41,8 +38,9 @@ public class NiServerTest {
         verify(nioServer).send(socketChannel, hej);
     }
 
+    @Ignore
     @Test
-    void test() throws IOException, InterruptedException {
+    public void test() throws IOException, InterruptedException {
         EchoWorker echoWorker = Mockito.mock(EchoWorker.class);
         InetAddress inetAddress = Mockito.mock(InetAddress.class);
         NioServer nioServer = new NioServer(inetAddress, 9090, echoWorker );

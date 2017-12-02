@@ -1,8 +1,8 @@
 package com.terraware;
 
 import javafx.util.Pair;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Test;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -13,8 +13,7 @@ import java.util.concurrent.ConcurrentSkipListSet;
  * @author Daniel Terranova <mailto:daniel.terranova@so4it.com>
  * @since 0.8.0
  */
-class ArrayUtilTest {
-
+public class ArrayUtilTest {
 
     @Test
     public void dummy2() {
@@ -60,7 +59,7 @@ class ArrayUtilTest {
     }
 
     @Test
-    void name() {
+    public void name() {
         Set<Person> people = new ConcurrentSkipListSet<>();
         people.add(new Person(3, "Moa", "moa"));
         people.add(new Person(1, "Daniel", "a"));
@@ -119,7 +118,7 @@ class ArrayUtilTest {
 
 
     @Test
-    void testNavigableSet() {
+    public void testNavigableSet() {
         LocalDate _2017_12_1 = LocalDate.of(2017, 12, 1);
         LocalDate _2018_12_2 = LocalDate.of(2018, 12, 2);
         LocalDate _2019_12_3 = LocalDate.of(2019, 12, 3);
@@ -134,7 +133,7 @@ class ArrayUtilTest {
 
 
     @Test
-    void testDuplicateNumber() {
+    public void testDuplicateNumber() {
         List<Integer> numbers = new ArrayList<Integer>();
         for(int i=1;i<10;i++){
             numbers.add(i);
@@ -162,33 +161,33 @@ class ArrayUtilTest {
     }
 
     @Test
-    void testFibs() {
+    public  void testFibs() {
         System.out.println("ArrayUtil.fib(10) = " + Arrays.toString(ArrayUtil.fib(10)));
     }
 
     @Test
-    void testRotate_five_step() {
+    public void testRotate_five_step() {
         int[] arr = {1,2,3,4,5};
         ArrayUtil.rotate(arr,5);
         assertArrayElementEquals(new int[] { 1,2,3,4,5 }, arr);
     }
 
     @Test
-    void testRotate_one_step() {
+    public void testRotate_one_step() {
         int[] arr = { 1, 2, 3, 4, 5};
         ArrayUtil.rotate(arr,1);
         assertArrayElementEquals(new int[] {5,1,2,3,4}, arr);
     }
 
     @Test
-    void testRotate_two_step() {
+    public void testRotate_two_step() {
         int[] arr = { 1,2,3,4, 5};
         ArrayUtil.rotate(arr,2);
         assertArrayElementEquals(new int[] {4,5,1,2,3}, arr);
     }
 
     @Test
-    void test2() {
+    public void test2() {
         int[] arr = { 1, 1, 3, 3, 3};
 
         HashMap<Integer,Integer> map  = new HashMap<>();
@@ -205,7 +204,7 @@ class ArrayUtilTest {
     }
 
     @Test
-    void namess() {
+    public void namess() {
         int[] arr = { 1 ,1};
         Arrays.sort(arr);
         for (int i = 0; i < arr.length-1; i++) {
@@ -215,7 +214,7 @@ class ArrayUtilTest {
     }
 
     @Test
-    void namezz() {
+    public void namezz() {
         int[] arr = { 8, 1, 1, 3, 3, 3, 3, 2, 2, 4, 8};
         Set<Integer> set = new HashSet<>();
         for (int i : arr) {
@@ -236,11 +235,11 @@ class ArrayUtilTest {
 
     private void assertArrayElementEquals(int[] expected, int[] actual) {
         if (expected.length != actual.length)
-            Assertions.fail(String.format("length differs: expected: %s, acutal",expected.length, actual.length ));
+            Assert.fail(String.format("length differs: expected: %s, acutal",expected.length, actual.length ));
 
         for (int i = 0; i < expected.length; i++) {
             if (expected[i] != actual[i])
-                Assertions.fail(String.format("element differs: expected: %s, acutal",expected[i], actual[i] ));
+                Assert.fail(String.format("element differs: expected: %s, acutal",expected[i], actual[i] ));
         }
     }
 }
