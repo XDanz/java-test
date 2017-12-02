@@ -2,3 +2,11 @@ java-test.iml
 out/
 test/test.iml
 .idea/
+*.iml
+.gradle
+build
+out
+gradlew
+gradlew.bat
+gradle
+
