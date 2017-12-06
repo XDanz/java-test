@@ -1,54 +1,6 @@
-/*apply plugin: 'maven'
-//
-//repositories {
-//    mavenCentral();
-//}
-//
-//apply plugin: 'java'
-//sourceCompatibility = "1.8"
-//apply plugin: 'eclipse'
-//
-//// application packaging
-//apply plugin: 'application'
-//mainClassName = 'com.terraware.nio.NioServer'
-//
-//// capture console input
-//run {
-//    standardInput = System.in
-//}
-//
-//// show test output on the console
-//test {
-//    testLogging {
-//        events "started","passed","skipped","failed"
-//        showStandardStreams = true
-//    }
-//}
-//
-//dependencies {
-//    testCompile group: 'junit', name: 'junit', version:'4.11'
-//}
-//group 'com.terraware'
-//version '1.0-SNAPSHOT'
-//
-//apply plugin: 'java'
-//
-//sourceCompatibility = 1.8
-//
-//repositories {
-//    mavenCentral()
-//}
-//
-//dependencies {
-//    testCompile group: 'junit', name: 'junit', version: '4.12'
-//    testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
-//    compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.25'
-//
-//}
-**/
-
 subprojects {
     apply plugin: 'java'
+    apply plugin: 'idea'
 
     repositories {
         mavenCentral()
