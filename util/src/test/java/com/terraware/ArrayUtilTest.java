@@ -16,8 +16,7 @@ import java.util.concurrent.ConcurrentSkipListSet;
 public class ArrayUtilTest {
 
     @Test
-    public void dummy2() {
-
+    public void testCase() {
         int price = 6;
         switch (price) {
             case 2: System.out.println("It is: 2");

@@ -1,4 +1,4 @@
-package com.terraware.server.nio;
+package com.terraware.nio;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

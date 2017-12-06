@@ -1,8 +1,8 @@
-package com.terraware;
+package com.terraware.nio;
 
-import com.terraware.server.nio.EchoWorker;
-import com.terraware.server.nio.NioServer;
-import com.terraware.server.nio.ServerDataEvent;
+import com.terraware.nio.EchoWorker;
+import com.terraware.nio.NioServer;
+import com.terraware.nio.ServerDataEvent;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
