@@ -16,6 +16,41 @@ import java.util.concurrent.ConcurrentSkipListSet;
 public class ArrayUtilTest {
 
     @Test
+    public void testJoinJoinsMultipleArraysInTheCorrectOrder() {
+        Integer[] array1 = new Integer[] {0, 1, 2};
+        Integer[] array2 = new Integer[] {3, 4, 5, 6};
+        Integer[] array3 = new Integer[] {7, 8, 9};
+
+        Integer[] result = ArrayUtil.join(Integer.class, array1, array2, array3);
+
+        Assert.assertNotNull(result);
+        Assert.assertEquals(10, result.length);
+
+        for (int i = 0; i < 10; i++) {
+            Assert.assertEquals(new Integer(i), result[i]);
+        }
+    }
+
+    @Test
+    public void testJoinCanHandleSingleNullInput() {
+        Integer[] array1 = new Integer[] {0, 1, 2};
+        Integer[] array2 = new Integer[] {3, 4, 5, 6};
+
+        Integer[] result = ArrayUtil.join(Integer.class, array1, null, array2);
+
+        Assert.assertNotNull(result);
+        Assert.assertEquals(array1.length + array2.length, result.length);
+    }
+
+    @Test
+    public void testJoinReturnsEmptyArrayWhenAllInputIsNull() {
+        Integer[] result = ArrayUtil.join(Integer.class, null, null);
+
+        Assert.assertNotNull(result);
+        Assert.assertEquals(0, result.length);
+    }
+
+    @Test
     public void testCase() {
         int price = 6;
         switch (price) {

@@ -2,6 +2,7 @@ package com.terraware;
 
 import javafx.util.Pair;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -9,6 +10,39 @@ import java.util.*;
  * @since 0.8.0
  */
 public class ArrayUtil {
+
+    /**
+     * Joins multiple object arrays of the same type into one array of the specified type.
+     * Arrays can be null. If all arrays are null an empty array is returned.
+     *
+     * @param <T>
+     * @param clazz the type of the array
+     * @param arrays the arrays to join, can contain <code>null</code>
+     * @return the joined array
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T[] join(Class<?> clazz, T[] ... arrays) {
+
+        // calculate size of target array
+        int size = 0;
+        for (T[] array : arrays) {
+            if (array != null) {
+                size += array.length;
+            }
+        }
+
+        // Its i safe here!
+        T[] result = (T[]) Array.newInstance(clazz, size);
+
+        int i = 0;
+        for (T[] array : arrays) {
+            if (array != null) {
+                System.arraycopy(array, 0, result, i, array.length);
+                i += array.length;
+            }
+        }
+        return result;
+    }
 
     public static int[] doInsertionSort(int[] input) {
         for (int i = 1; i < input.length; i++) {
