@@ -32,7 +32,7 @@ public class SetUtilTest {
     }
 
     @Test
-    public void toSet_Iterable_ReturnsExpectedSet() throws Exception {
+    public void toSet_Iterable_ReturnsExpectedSet() {
         Iterable<Integer> iterable = new HashSet<>(Arrays.asList(1, 2, 2, 3));
         Set<Integer> set = SetUtil.toSet(iterable);
         assertEquals(3, set.size());
@@ -54,36 +54,12 @@ public class SetUtilTest {
     @Test
     public void immutableSetThrowsUnsupportedOperationExceptionWhenCallingModifiableMethods() {
         final Set<Integer> set = SetUtil.immutableSet(SetUtil.toSet(new Integer[]{1}));
-        throwsUOE(new T() {
-            public void call() {
-                set.add(1);
-            }
-        }, "add");
-        throwsUOE(new T() {
-            public void call() {
-                set.addAll(Collections.<Integer>emptySet());
-            }
-        }, "addAll");
-        throwsUOE(new T() {
-            public void call() {
-                set.clear();
-            }
-        }, "clear");
-        throwsUOE(new T() {
-            public void call() {
-                set.remove(1);
-            }
-        }, "remove");
-        throwsUOE(new T() {
-            public void call() {
-                set.removeAll(Collections.<Integer>emptySet());
-            }
-        }, "removeAll");
-        throwsUOE(new T() {
-            public void call() {
-                set.retainAll(Collections.<Integer>emptySet());
-            }
-        }, "retainAll");
+        throwsUOE(() -> set.add(1), "add");
+        throwsUOE(() -> set.addAll(Collections.<Integer>emptySet()), "addAll");
+        throwsUOE(set::clear, "clear");
+        throwsUOE(() -> set.remove(1), "remove");
+        throwsUOE(() -> set.removeAll(Collections.<Integer>emptySet()), "removeAll");
+        throwsUOE(() -> set.retainAll(Collections.<Integer>emptySet()), "retainAll");
     }
 
     private void throwsUOE(T t, String method) {
