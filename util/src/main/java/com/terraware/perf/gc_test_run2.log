@@ -1,0 +1,33 @@
+Java HotSpot(TM) 64-Bit Server VM (25.162-b12) for linux-amd64 JRE (1.8.0_162-b12), built on Dec 19 2017 21:15:48 by "java_re" with gcc 4.3.0 20080428 (Red Hat 4.3.0-8)
+Memory: 4k page, physical 16316000k(464132k free), swap 16658428k(16658260k free)
+CommandLine flags: -XX:InitialHeapSize=2147483648 -XX:MaxHeapSize=2147483648 -XX:+PrintGC -XX:+PrintGCCause -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintTenuringDistribution -XX:+UseCompressedClassPointers -XX:+UseCompressedOops -XX:+UseParallelGC 
+3,818: [GC (Allocation Failure) 
+Desired survivor size 89128960 bytes, new threshold 7 (max 15)
+[PSYoungGen: 524800K->608K(611840K)] 524800K->616K(2010112K), 0,0020112 secs] [Times: user=0,00 sys=0,00, real=0,00 secs] 
+7,423: [GC (Allocation Failure) 
+Desired survivor size 89128960 bytes, new threshold 7 (max 15)
+[PSYoungGen: 525408K->656K(611840K)] 525416K->672K(2010112K), 0,0070720 secs] [Times: user=0,02 sys=0,01, real=0,01 secs] 
+10,960: [GC (Allocation Failure) 
+Desired survivor size 89128960 bytes, new threshold 7 (max 15)
+[PSYoungGen: 525456K->496K(611840K)] 525472K->520K(2010112K), 0,0009949 secs] [Times: user=0,00 sys=0,00, real=0,00 secs] 
+14,633: [GC (Allocation Failure) 
+Desired survivor size 89128960 bytes, new threshold 7 (max 15)
+[PSYoungGen: 525296K->528K(611840K)] 525320K->552K(2010112K), 0,0010887 secs] [Times: user=0,00 sys=0,01, real=0,00 secs] 
+18,102: [GC (Allocation Failure) 
+Desired survivor size 1048576 bytes, new threshold 6 (max 15)
+[PSYoungGen: 525328K->528K(611840K)] 525352K->560K(2010112K), 0,0008860 secs] [Times: user=0,00 sys=0,00, real=0,00 secs] 
+22,097: [GC (Allocation Failure) 
+Desired survivor size 1048576 bytes, new threshold 5 (max 15)
+[PSYoungGen: 525328K->624K(697856K)] 525360K->656K(2096128K), 0,0035377 secs] [Times: user=0,01 sys=0,00, real=0,00 secs] 
+27,106: [GC (Allocation Failure) 
+Desired survivor size 1048576 bytes, new threshold 4 (max 15)
+[PSYoungGen: 697456K->64K(697856K)] 697488K->580K(2096128K), 0,0008476 secs] [Times: user=0,00 sys=0,00, real=0,00 secs] 
+Heap
+ PSYoungGen      total 697856K, used 347557K [0x00000000d5580000, 0x0000000100000000, 0x0000000100000000)
+  eden space 696832K, 49% used [0x00000000d5580000,0x00000000ea8d9760,0x00000000ffe00000)
+  from space 1024K, 6% used [0x00000000ffe00000,0x00000000ffe10000,0x00000000fff00000)
+  to   space 1024K, 0% used [0x00000000fff00000,0x00000000fff00000,0x0000000100000000)
+ ParOldGen       total 1398272K, used 516K [0x0000000080000000, 0x00000000d5580000, 0x00000000d5580000)
+  object space 1398272K, 0% used [0x0000000080000000,0x0000000080081080,0x00000000d5580000)
+ Metaspace       used 3323K, capacity 4500K, committed 4864K, reserved 1056768K
+  class space    used 360K, capacity 388K, committed 512K, reserved 1048576K

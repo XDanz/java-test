@@ -4,6 +4,10 @@ import javafx.util.Pair;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
@@ -263,7 +267,7 @@ public class ArrayUtilTest {
     }
 
 
-    Date toDate(LocalDate localDate) {
+    private Date toDate(LocalDate localDate) {
         return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 

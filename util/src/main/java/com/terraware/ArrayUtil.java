@@ -131,4 +131,12 @@ public class ArrayUtil {
         }
     }
 
+    static int[][] copy2dArray(int[][] from) {
+        int[][] copy = new int[from.length][from[0].length];
+        for (int i = 0; i < 5; i++) {
+            System.arraycopy(from[i], 0, copy[i],0, from[i].length);
+        }
+        return copy;
+    }
+
 }

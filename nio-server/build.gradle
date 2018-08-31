@@ -8,3 +8,20 @@ dependencies {
 }
 
 mainClassName = 'com.terraware.nio.NioServer'
+
+
+distributions {
+    main {
+        contents {
+            from { 'additons' }
+            from { 'additions2' }
+            into { 'conf' }
+        }
+    }
+}
+
+run {
+    run {
+        args = [ "${port}" ]
+    }
+}
