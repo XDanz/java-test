@@ -1,11 +1,9 @@
 package com.terraware;
 
-import junit.extensions.TestSetup;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.MethodRule;
 
 public class RuleTest {
 
@@ -14,7 +12,7 @@ public class RuleTest {
 
     @Before
     public void setUp() throws Exception {
-        System.out.println("TestSetup = " );
+//        System.out.println("TestSetup = " );
     }
 
     @Rule
@@ -27,6 +25,20 @@ public class RuleTest {
 
     @Test
     public void name2() {
-        System.out.println("testname2 ");
+
+        int moa = 10;
+        int lea;
+        boolean santEllerFalskt;
+
+
+        for (int i = 0; i < 10; i++) {
+            if (moa < 100) {
+                System.out.println(" Moa är mindre än hundra");
+            } else {
+                System.out.println(" Moa är inte mindre än hundra");
+            }
+            moa = moa + 10;
+        }
+
     }
 }

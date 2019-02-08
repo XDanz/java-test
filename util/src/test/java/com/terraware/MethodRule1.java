@@ -11,9 +11,7 @@ public class MethodRule1 implements MethodRule {
         return new Statement() {
             @Override
             public void evaluate() throws Throwable {
-                System.out.println("Before in rule. ..");
                 base.evaluate();
-                System.out.println("After in rule. ..");
             }
         };
     }

@@ -24,7 +24,7 @@ public class CopyTest {
             long start = System.nanoTime();
             copy2dArray(copy);
             long diff = System.nanoTime() - start;
-            System.out.println(diff + " ns");
+            //System.out.println(diff + " ns");
         }
     }
 }

@@ -10,9 +10,7 @@ public class ClassRule1 implements TestRule {
         return new Statement() {
             @Override
             public void evaluate() throws Throwable {
-                System.out.println(" START CLASS RULE");
                 base.evaluate();
-                System.out.println(" END CLASS RULE");
 
             }
         };
