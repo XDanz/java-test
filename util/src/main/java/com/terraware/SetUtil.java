@@ -34,6 +34,14 @@ public final class SetUtil {
         return set;
     }
 
+    public static <T> Set<T> of(T... vals) {
+        HashSet<T> set = new HashSet<>();
+        for (T tVal : vals) {
+            set.add(tVal);
+        }
+return set;
+    }
+
     /**
      * Converts an array to a immutable set. This is the same as <code>immutableSet(toSet(array))</code>.
      *
