@@ -1,6 +1,16 @@
 package com.terraware;
 
-import javafx.util.Pair;
+import com.google.common.collect.Ordering;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.function.BiConsumer;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -12,6 +22,8 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
 import java.util.concurrent.ConcurrentSkipListSet;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Daniel Terranova <mailto:daniel.terranova@so4it.com>
@@ -86,15 +98,15 @@ public class ArrayUtilTest {
         System.out.println("Max=" + ArrayUtil.max(input));
     }
 
-    @Test
-    public void testInvertions() {
-        int[] input = { 4, 2, 9, 6, 23, 12, 34, 35, 1 };
-
-        for (Pair<Integer, Integer> pair : ArrayUtil.doInvertions(input)) {
-            System.out.println("pair = " + pair);
-        }
-
-    }
+//    @Test
+//    public void testInvertions() {
+//        int[] input = { 4, 2, 9, 6, 23, 12, 34, 35, 1 };
+//
+//        for (Pair<Integer, Integer> pair : ArrayUtil.doInvertions(input)) {
+//            System.out.println("pair = " + pair);
+//        }
+//
+//    }
 
     @Test
     public void name() {
@@ -266,6 +278,56 @@ public class ArrayUtilTest {
         System.out.println("set = " + set);
     }
 
+
+    @Test
+    public void generateData() {
+
+        List<String> data = null;
+        try {
+            data = Files.lines(Paths.get("/home/daniel/wlist")).collect(Collectors.toList());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        List<String> cpy = new ArrayList<>(data);
+        Map<Character, List<String>> collect = cpy.stream().collect(Collectors.groupingBy(s -> s.charAt(0),
+                TreeMap::new,
+                new Collector<String, TreeSet<String>, List<String>>() {
+                    @Override
+                    public Supplier<TreeSet<String>> supplier() {
+                        return TreeSet::new;
+                    }
+
+                    @Override
+                    public BiConsumer<TreeSet<String>, String> accumulator() {
+                        return TreeSet::add;
+                    }
+
+                    @Override
+                    public BinaryOperator<TreeSet<String>> combiner() {
+                        return (strings, strings2) -> {
+                            strings.addAll(strings2);
+                            return strings;
+                        };
+                    }
+
+                    @Override
+                    public Function<TreeSet<String>, List<String>> finisher() {
+                        return ArrayList::new;
+                    }
+
+                    @Override
+                    public Set<Characteristics> characteristics() {
+                        return EnumSet.of(Characteristics.UNORDERED);
+                    }
+                }));
+
+        List<String> collect1 = collect.values().stream().flatMap(Collection::stream).collect(Collectors.toList());
+        assertTrue(Ordering.natural().isOrdered(collect1));
+
+
+    }
 
     private Date toDate(LocalDate localDate) {
         return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());

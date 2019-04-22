@@ -1,6 +1,7 @@
 package com.terraware;
 
-import javafx.util.Pair;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.lang.reflect.Array;
 import java.util.*;
@@ -74,7 +75,7 @@ public class ArrayUtil {
         for (int i = 0; i < arr.length; i++) {
             for (int j = i+1; j < arr.length; j++) {
                 if (arr[i] > arr[j])
-                    pairs.add(new Pair<>(arr[i], arr[j]));
+                    pairs.add(ImmutablePair.of(arr[i], arr[j]));
 
             }
         }
