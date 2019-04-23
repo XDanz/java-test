@@ -1,13 +1,17 @@
 package com.terraware.jmh;
 
-import jdk.nashorn.internal.ir.annotations.Ignore;
-import org.openjdk.jmh.annotations.*;
-import org.openjdk.jmh.infra.Blackhole;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
 import java.util.function.BinaryOperator;
@@ -15,8 +19,19 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import jdk.nashorn.internal.ir.annotations.Ignore;
+import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.BenchmarkMode;
+import org.openjdk.jmh.annotations.Fork;
+import org.openjdk.jmh.annotations.Mode;
+import org.openjdk.jmh.annotations.OutputTimeUnit;
+import org.openjdk.jmh.annotations.Scope;
+import org.openjdk.jmh.annotations.Setup;
+import org.openjdk.jmh.annotations.State;
+import org.openjdk.jmh.annotations.Warmup;
+import org.openjdk.jmh.infra.Blackhole;
 
-@BenchmarkMode(Mode.AverageTime)
+@BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 @State(Scope.Benchmark)
 @Fork(value = 2, jvmArgs = {"-Xms2G", "-Xmx2G"})
@@ -82,6 +97,31 @@ public class SortingBenchMark {
                     }
                 }));
         bh.consume(collect);
+    }
+
+    @Benchmark
+    public void plainOld(Blackhole bh) {
+        List<String> cpy = new ArrayList<>(DATA_FOR_TESTING);
+
+        Map<Character, SortedSet<String>> map = new TreeMap<>();
+
+        for (String s : cpy) {
+            char c = s.charAt(0);
+            map.compute(c, (character, strings) -> {
+                SortedSet<String> list = new TreeSet<>();
+                if(strings != null) {
+                    strings.add(s);
+                    list = strings;
+                }
+                return list;
+            });
+        }
+        Map<Character, List<String>> map2 = new TreeMap<>();
+
+        for (Map.Entry<Character, SortedSet<String>> entry : map.entrySet()) {
+            map2.put(entry.getKey(), new ArrayList<>(entry.getValue()));
+        }
+        bh.consume(map2);
     }
 
     @Benchmark

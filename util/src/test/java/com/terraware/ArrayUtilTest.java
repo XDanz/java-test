@@ -5,12 +5,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.apache.commons.collections4.list.TreeList;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -325,6 +327,40 @@ public class ArrayUtilTest {
 
         List<String> collect1 = collect.values().stream().flatMap(Collection::stream).collect(Collectors.toList());
         assertTrue(Ordering.natural().isOrdered(collect1));
+
+
+    }
+
+    @Test
+    public void plainOld() {
+        List<String> data = null;
+        try {
+            data = Files.lines(Paths.get("/home/daniel/wlist")).collect(Collectors.toList());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+        Map<Character, SortedSet<String>> map = new TreeMap<>();
+
+            for (String s : data) {
+                char c = s.charAt(0);
+                map.compute(c, (character, strings) -> {
+                    SortedSet<String> list = new TreeSet<>();
+                    if(strings != null) {
+                        strings.add(s);
+                        list = strings;
+                    }
+                    return list;
+                });
+            }
+            Map<Character, List<String>> map2 = new TreeMap<>();
+
+        for (Map.Entry<Character, SortedSet<String>> entry : map.entrySet()) {
+            map2.put(entry.getKey(), new ArrayList<>(entry.getValue()));
+        }
 
 
     }
