@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -32,7 +33,7 @@ import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
 
 @BenchmarkMode(Mode.Throughput)
-@OutputTimeUnit(TimeUnit.MILLISECONDS)
+@OutputTimeUnit(TimeUnit.SECONDS)
 @State(Scope.Benchmark)
 @Fork(value = 2, jvmArgs = {"-Xms2G", "-Xmx2G"})
 @Warmup(iterations = 3)
@@ -125,10 +126,41 @@ public class SortingBenchMark {
     }
 
     @Benchmark
+    public void plainOld2(Blackhole bh) {
+        List<String> cpy = new ArrayList<>(DATA_FOR_TESTING);
+
+        SortedSet<String> map = new TreeSet<>(cpy);
+        Map<Character, List<String>> map2 = new TreeMap<>();
+        for (String s : map) {
+            char c = s.charAt(0);
+            map2.compute(c, (character, strings) -> {
+                List<String> list = new ArrayList<>();
+                if(strings != null) {
+                    strings.add(s);
+                    list = strings;
+                }
+                return list;
+            });
+        }
+        bh.consume(map2);
+    }
+
+    @Benchmark
     public void sortedSetInsert(Blackhole bh) {
         List<String> cpy = new ArrayList<>(DATA_FOR_TESTING);
         TreeSet<String> set = new TreeSet<>(cpy);
-        Map<Character, List<String>> collect = set.stream().sorted().collect(Collectors.groupingBy(s -> s.charAt(0)));
+        Map<Character, List<String>> collect = set.stream().collect(Collectors.groupingBy(s -> s.charAt(0)));
+        bh.consume(collect);
+    }
+
+    @Benchmark
+    public void sortedSetInsert2(Blackhole bh) {
+        List<String> cpy = new ArrayList<>(DATA_FOR_TESTING);
+        TreeSet<String> set = new TreeSet<>(cpy);
+        Map<Character, List<String>> collect = new HashMap<>();
+        for (String s : set) {
+            collect.computeIfAbsent(s.charAt(0), k -> new ArrayList<>()).add(s);
+        }
         bh.consume(collect);
     }
 
