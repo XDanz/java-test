@@ -1,8 +1,19 @@
 subprojects {
     apply plugin: 'java'
     apply plugin: 'idea'
+    apply plugin: 'maven-publish'
+
 
     repositories {
         mavenCentral()
     }
+}
+
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven'
+
+    group = 'terraware'
+    version = '0.1-SNAPSHOT'
 }
