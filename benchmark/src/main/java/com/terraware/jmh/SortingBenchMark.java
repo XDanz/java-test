@@ -20,7 +20,6 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
@@ -46,7 +45,6 @@ public class SortingBenchMark {
         DATA_FOR_TESTING = createData();
     }
 
-    @Ignore
     @Benchmark
     public void sortFirst(Blackhole bh) {
         List<String> cpy = new ArrayList<>(DATA_FOR_TESTING);
@@ -55,7 +53,6 @@ public class SortingBenchMark {
         bh.consume(collect);
     }
 
-    @Ignore
     @Benchmark
     public void loopWhile(Blackhole bh) {
         List<String> cpy = new ArrayList<>(DATA_FOR_TESTING);
