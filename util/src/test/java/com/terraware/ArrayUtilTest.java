@@ -225,6 +225,25 @@ public class ArrayUtilTest {
     }
 
     @Test
+    public void testRotate_() {
+
+
+        System.out.println(Arrays.toString(CardTrickUtils.generate(4)));
+        System.out.println(Arrays.toString(CardTrickUtils.generate(5)));
+        System.out.println(Arrays.toString(CardTrickUtils.generate(6)));
+        //assertArrayElementEquals(new int[] { 1,2,3,4,5 }, arr);
+    }
+
+    public static  int[] add2BeginningOfArray(int[] elements, int element)
+    {
+        int[] newArray = Arrays.copyOf(elements, elements.length + 1);
+        newArray[0] = element;
+        System.arraycopy(elements, 0, newArray, 1, elements.length);
+
+        return newArray;
+    }
+
+    @Test
     public void testRotate_one_step() {
         int[] arr = { 1, 2, 3, 4, 5};
         ArrayUtil.rotate(arr,1);

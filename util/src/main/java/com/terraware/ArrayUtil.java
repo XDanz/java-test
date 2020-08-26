@@ -132,6 +132,13 @@ public class ArrayUtil {
         }
     }
 
+    static void rightRotate(int[] arr) {
+        final int lastIndex = arr.length - 1;
+        final int last = arr[lastIndex];
+        System.arraycopy(arr, 0, arr, 1, lastIndex);
+        arr[0] = last;
+    }
+
     static int[][] copy2dArray(int[][] from) {
         int[][] copy = new int[from.length][from[0].length];
         for (int i = 0; i < 5; i++) {
