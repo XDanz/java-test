@@ -5,21 +5,16 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import org.apache.commons.collections4.list.TreeList;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.math.MathContext;
-import java.math.RoundingMode;
+//import org.junit.Test;
+
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
@@ -233,6 +228,8 @@ public class ArrayUtilTest {
         System.out.println(Arrays.toString(CardTrickUtils.generate(6)));
         //assertArrayElementEquals(new int[] { 1,2,3,4,5 }, arr);
     }
+
+
 
     public static  int[] add2BeginningOfArray(int[] elements, int element)
     {

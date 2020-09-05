@@ -16,4 +16,6 @@ allprojects {
 
     group = 'terraware'
     version = '0.1-SNAPSHOT'
+    sourceCompatibility = 11
+
 }
