@@ -111,7 +111,10 @@ public class Help2 {
         for (Integer i : unresolvedSet) {
             int index = i;
             String str = eval(ea[index], eb[index]);
-
+            // if str is null it means 2 things
+            // Either both are placeholders and could be determined later
+            // so add to set. Or
+            // both are non placeholders and string don't match so abort directly!
             if (str != null) {
                 out[index] = str;
             } else if (ea[index].isPlaceHolder() && eb[index].isPlaceHolder()) {
@@ -124,6 +127,23 @@ public class Help2 {
 
     }
 
+    /**
+     *  Determine a String by comparing a and b.
+     *  If a is placeholder and b is placeholder both
+     *  without value then return null.
+     *
+     *  If either a or b is a placeholder then set
+     *  the value of the non-placeholder to the placeholder
+     *  and return the value.
+     *
+     *  if none of the values is a placeholder then
+     *  compare and if match return the matched value or else
+     *  return null.
+     *
+     * @param a - Elem
+     * @param b - Elem
+     * @return null or string
+     */
     public static String eval(final Elem a, final Elem b) {
         String val = null;
 
@@ -145,6 +165,7 @@ public class Help2 {
             // values are the same return value
             val = a.getValue();
         }
+        // or else values not matched
         return val;
 
     }
