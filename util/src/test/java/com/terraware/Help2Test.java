@@ -1,16 +1,16 @@
 package com.terraware;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
-import junit.framework.TestCase;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import static com.terraware.FerryProblem.getNextArrivalTime;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class Help2Test extends TestCase {
+public class Help2Test  {
 
     @Test
     public void test0() {
@@ -21,11 +21,40 @@ public class Help2Test extends TestCase {
     }
 
     @Test
+    public void test01() {
+        String[] a = {"howafskfjkasfjkdjsafkjdkasjfkasfkjasdkfjkasfjdkasjfkjaskf", "now", "brown", "<animal>"};
+        String[] b = {"<foo>", "now", "<color>", "cow"};
+        String[] r = Help2.help3(a, b);
+        assertThat(r).isEqualTo(new String[]{});
+    }
+
+    @Test
+    public void test02() {
+        List<String> al = new ArrayList<>();
+
+        for (int i = 0; i < 110; i++)  {
+          al.add("now");
+        }
+
+        List<String> bl = new ArrayList<>();
+        bl.add("<foo>");
+
+        for (int i = 0; i < 109; i++)  {
+          bl.add("now");
+        }
+
+        String[] a = al.toArray(new String[0]);
+        String[] b = bl.toArray(new String[0]);
+        String[] r = Help2.help3(a, b);
+        assertThat(r).isEqualTo(new String[]{});
+    }
+
+    @Test
     public void test1() {
         String[] a = {"<how>", "now", "brown", "<animal>"};
         String[] b = {"<foo>", "now", "<color>", "cow"};
         String[] r = Help2.help3(a, b);
-        assertThat(r).isEqualTo(new String[]{"now", "now", "brown", "cow"});
+        assertThat(r).isEqualTo(new String[]{"brzzan", "now", "brown", "cow"});
     }
 
     @Test
@@ -137,7 +166,7 @@ public class Help2Test extends TestCase {
         String[] b = {"a", "<x>", "a",   "b"  };
         String[] a = {"a", "<x>", "<b>", "<y>"};
         String[] r = Help2.help3(a, b);
-        assertThat(r).isEqualTo(new String[]{"a", "a", "a", "b"});
+        assertThat(r).isEqualTo(new String[]{"a", "brzzan", "a", "b"});
     }
 
     @Test
@@ -169,7 +198,7 @@ public class Help2Test extends TestCase {
         String[] b = { "a",    "<x>",    "b",    "<y>", "c"  };
         String[] a = { "<y>",  "<x>",    "b",    "<y>","<z>"   };
         String[] r = Help2.help3(a, b);
-        assertThat(r).isEqualTo(new String[]{"a", "b", "b", "a","c"});
+        assertThat(r).isEqualTo(new String[]{"a", "brzzan", "b", "a","c"});
     }
 
     @Test
@@ -188,29 +217,55 @@ public class Help2Test extends TestCase {
         assertThat(r).isEqualTo(new String[]{});
     }
 
+    @Test
+    public void test22() {
+        String[] b = { "<x>",    "<x>",    "<x>",    "<x>", "<x>"  };
+        String[] a = { "<y>",  "<y>",    "<y>",      "<y>", "<y>"   };
+        String[] r = Help2.help3(a, b);
+        assertThat(r).isEqualTo(new String[]{"brzzan","brzzan","brzzan","brzzan","brzzan"});
+    }
+
+    @Test
+    public void test23() {
+        String[] b = { "<x>",    "<x>",    "<x>",    "<x>", "<x>"  };
+        String[] a = { "<y>",    "<y>",    "<y>",    "<y>", "<z>"   };
+        String[] r = Help2.help3(a, b);
+        assertThat(r).isEqualTo(new String[]{"brzzan", "brzzan", "brzzan", "brzzan", "brzzan"});
+    }
+
+    @Test
+    public void test24() {
+        String[] b = {"<x>", "<y>", "<z>", "<u>", "<v>"};
+        String[] a = {"<v>", "<x>", "<y>", "<u>", "<z>"};
+        String[] r = Help2.help3(a, b);
+        assertThat(r).isEqualTo(new String[]{"brzzan", "brzzan", "brzzan", "brzzan", "brzzan"});
+    }
+
+     @Test
+    public void test25() {
+        String[] b = { "<x>",    "<y>",    "<z>",    "<u>", "<v>"  };
+        String[] a = { "a",      "<x>",    "<y>",    "<u>", "<z>"   };
+        String[] r = Help2.help3(a, b);
+        assertThat(r).isEqualTo(new String[]{"a", "brzzan", "brzzan", "brzzan", "brzzan"});
+    }
+
     @ParameterizedTest
     @MethodSource("provider")
-    void get_next_arrivalTime(String[] pattern, String[] expected) {
+    void parma(String[] pattern, String[] expected) {
         String[] b = { "a", "<x>", "b", "<x>", "c"  };
-        String[] r = Help2.help3(a, b);
 
-        int res = Help2.help3( );
-        assertThat(res).isEqualTo(expected);
+        String[] out = Help2.help3(b, pattern);
+        assertThat(out).isEqualTo(expected);
+
+        out = Help2.help3(pattern,b);
+        assertThat(out).isEqualTo(expected);
     }
 
     private static Stream<Arguments> provider() {
         return Stream.of(
-            Arguments.of(0, 5),
-            Arguments.of(1, 5),
-            Arguments.of(2, 5),
-            Arguments.of(3, 5),
-            Arguments.of(3, 5),
-            Arguments.of(4, 6),
-            Arguments.of(5, 7),
-            Arguments.of(6, 8),
-            Arguments.of(7, 8),
-            Arguments.of(8, 9),
-            Arguments.of(9, 10),
-            Arguments.of(10, -1));
+            Arguments.of(new String[]{"<y>","<y>","<z>", "a", "c" }, new String[]{"a","a","b","a","c" }),
+            Arguments.of(new String[]{"a",  "<y>","b", "<y>","c" }, new String[]{"a","brzzan","b","brzzan","c" }),
+            Arguments.of(new String[]{"<y>",  "<z>","<x>", "<z>","<v>" }, new String[]{"a","brzzan","b","brzzan","c" }),
+            Arguments.of(new String[]{"<z>",  "<x>","b", "<x>","<x>" }, new String[]{"a","c","b","c","c" }));
     }
 }

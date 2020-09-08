@@ -72,8 +72,12 @@ public class Help2 {
             return new String[0];
         }
 
-        Elem[] ea = elems(a);
-        Elem[] eb = elems(b);
+        Elem[] ea = createElements(a);
+        Elem[] eb = createElements(b);
+
+        if (ea == null || eb == null) {
+            return new String[0];
+        }
 
         String[] out = new String[ea.length];
 
@@ -95,15 +99,9 @@ public class Help2 {
             }
         }
 
-        for (Integer i : unResolvedIndexes) {
-            String w;
-            if ((w = findWord(ea)) != null || (w = findWord(eb)) != null) {
-                out[i] = w;
-            } else {
-                out = new String[0];
-            }
+        for (Integer index : unResolvedIndexes) {
+            out[index] = "brzzan";
         }
-
 
         return out;
     }
@@ -126,45 +124,46 @@ public class Help2 {
 
     }
 
-    private static String findWord(Elem[] elems) {
-        for (Elem elem : elems) {
-            if (!elem.isPlaceHolder())
-                return elem.getValue();
-        }
-        return null;
-    }
-
-    private static String eval(final Elem a, final Elem b) {
+    public static String eval(final Elem a, final Elem b) {
         String val = null;
 
+        // Placeholder a and b nothing could be determined
+        // return immediately
         if (a.getValue() == null && b.getValue() == null) {
             return null;
         }
 
         if (a.getValue() == null && (b.getValue() != null)) {
+            // Placeholder a is set to b value
             a.addValue(b.getValue());
             val = b.getValue();
-        }
-
-        if (b.getValue() == null && (a.getValue() != null)) {
+        } else if (b.getValue() == null && (a.getValue() != null)) {
+            // Placeholder b is set to a value
             b.addValue(a.getValue());
             val = a.getValue();
-        }
-
-        if (a.getValue().equals(b.getValue())) {
+        } else if (a.getValue().equals(b.getValue())) {
+            // values are the same return value
             val = a.getValue();
         }
         return val;
 
     }
 
-    public static Elem[] elems(String[] a) {
+    public static Elem[] createElements(String[] a) {
         Elem[] ea = new Elem[a.length];
         Map<String, Elem> ma = new HashMap<>();
         for (int i = 0; i < a.length; i++) {
             String s = a[i];
+
+            if (!validate(a)) {
+                return null;
+            }
+
             Elem e;
             if (isPlaceHolder(s)) {
+                if (!validatePlaceHolder(s))
+                    return null;
+
                 if (ma.containsKey(s)) {
                     e = ma.get(s);
                 } else {
@@ -172,12 +171,42 @@ public class Help2 {
                     ma.put(s, e);
                 }
             } else {
+                if (!validateWord(s)) {
+                    return null;
+                }
                 e = new Elem(s, false);
             }
             ea[i] = e;
         }
         return ea;
+    }
 
+    private static boolean validateWord(final String s) {
+        return s.length() <= 16;
+    }
+
+    private static boolean validatePlaceHolder(final String s) {
+        return validateChars(s);
+    }
+
+    private static boolean validate(final String[] a) {
+        int sz = 0;
+        for (String s : a) {
+            if ((sz + s.length()) > 100) {
+                return false;
+            }
+            sz += s.length();
+        }
+        return true;
+    }
+
+    private static boolean validateChars(final String s) {
+        for (char c : s.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static boolean isPlaceHolder(String s) {
