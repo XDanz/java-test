@@ -60,17 +60,7 @@ public class FerryProblemTest {
             Arguments.of(5, List.of(2,3)),
             Arguments.of(6, List.of(2,3,4)),
             Arguments.of(7, List.of(2,3,4,5)),
-            Arguments.of(8, List.of(2,3,4,5,7))
-//                ,
-//            Arguments.of(3, 5),
-//            Arguments.of(4, 6),
-//            Arguments.of(5, 7),
-//            Arguments.of(6, 8),
-//            Arguments.of(7, 8),
-//            Arguments.of(8, 9),
-//            Arguments.of(9, 10),
-//            Arguments.of(10, -1)
-            );
+            Arguments.of(8, List.of(2,3,4,5,7)));
     }
 
     private static Stream<Arguments> provider() {
