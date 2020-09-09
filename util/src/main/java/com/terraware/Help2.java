@@ -1,4 +1,4 @@
-package com.terraware;
+//package com.terraware;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -118,7 +118,11 @@ public class Help2 {
             if (str != null) {
                 out[index] = str;
             } else if (ea[index].isPlaceHolder() && eb[index].isPlaceHolder()) {
-                unresolved.add(index);
+                if (ea[index].getValue() == null && eb[index].getValue() == null) {
+                    unresolved.add(index);
+                } else {
+                    return null;
+                }
             } else {
                 return null;
             }
@@ -128,17 +132,17 @@ public class Help2 {
     }
 
     /**
-     *  Determine a String by comparing a and b.
-     *  If a is placeholder and b is placeholder both
-     *  without value then return null.
-     *
-     *  If either a or b is a placeholder then set
-     *  the value of the non-placeholder to the placeholder
-     *  and return the value.
-     *
-     *  if none of the values is a placeholder then
-     *  compare and if match return the matched value or else
-     *  return null.
+     * Determine a String by comparing a and b.
+     * If a is placeholder and b is placeholder both
+     * without value then return null.
+     * <p>
+     * If either a or b is a placeholder then set
+     * the value of the non-placeholder to the placeholder
+     * and return the value.
+     * <p>
+     * if none of the values is a placeholder then
+     * compare and if match return the matched value or else
+     * return null.
      *
      * @param a - Elem
      * @param b - Elem
@@ -165,7 +169,7 @@ public class Help2 {
             // values are the same return value
             val = a.getValue();
         }
-        // or else values not matched
+
         return val;
 
     }

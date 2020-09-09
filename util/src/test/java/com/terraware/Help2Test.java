@@ -257,6 +257,14 @@ public class Help2Test  {
         assertThat(r).isEqualTo(new String[]{ "brzzan", "brzzan", "brzzan"});
     }
 
+    @Test
+    public void test27() {
+        String[] b = { "<x>","<y>","<z>","a","b"  };
+        String[] a = { "b",  "<x>", "<y>","a","<z>"  };
+        String[] r = Help2.help3(a, b);
+        assertThat(r).isEqualTo(new String[]{ "b", "brzzan", "brzzan", "a", "b"});
+    }
+
     @ParameterizedTest
     @MethodSource("provider")
     void parma(String[] pattern, String[] expected) {
