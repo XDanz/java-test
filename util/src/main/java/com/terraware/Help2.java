@@ -1,4 +1,4 @@
-//package com.terraware;
+package com.terraware;
 
 import java.util.HashMap;
 import java.util.HashSet;
