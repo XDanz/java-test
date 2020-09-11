@@ -1,9 +1,11 @@
 package com.terraware;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.Set;
@@ -20,7 +22,8 @@ public class StackSet {
         ADD,
         UNION,
         INTERSECT;
-        public static OP[] of(OP ...ops) {
+
+        public static OP[] of(OP... ops) {
             int len = ops.length;
             OP[] o = new OP[len];
             arraycopy(ops, 0, o, 0, len);
@@ -30,10 +33,10 @@ public class StackSet {
     }
 
     public static class EmptySet {
-        private final Set<EmptySet> set;
+        private final List<EmptySet> set;
 
         private EmptySet() {
-            this.set = new LinkedHashSet<>();
+            this.set = new ArrayList<>();
         }
 
         public static EmptySet of() {
@@ -46,14 +49,14 @@ public class StackSet {
 
         public static EmptySet of(EmptySet... s) {
             EmptySet emptySet = new EmptySet();
-            Set<EmptySet> backedSet = emptySet.getSet();
+            List<EmptySet> backedSet = emptySet.getList();
             backedSet.addAll(asList(s));
             return emptySet;
         }
 
         public EmptySet duplicate() {
             EmptySet e = EmptySet.of();
-            e.getSet().addAll(getSet());
+            e.getList().addAll(getList());
             return e;
         }
 
@@ -62,7 +65,7 @@ public class StackSet {
         }
 
         public EmptySet(EmptySet emptySet) {
-            this.set = new LinkedHashSet<>();
+            this.set = new ArrayList<>();
             set.add(emptySet);
         }
 
@@ -70,21 +73,24 @@ public class StackSet {
             set.add(s);
         }
 
-        public Set<EmptySet> getSet() {
+        public List<EmptySet> getList() {
             return set;
         }
 
-        public EmptySet intersect(EmptySet emptySet) {
+        public EmptySet intersect(EmptySet set) {
             EmptySet clone = EmptySet.of();
-            clone.getSet().addAll(set);
-            clone.getSet().retainAll(emptySet.getSet());
+            List<EmptySet> result = clone.getList();
+            result.addAll(getList());
+            result.retainAll(set.getList());
+
             return clone;
         }
 
         EmptySet union(EmptySet providedSet) {
             EmptySet union = new EmptySet();
-            union.getSet().addAll(set);
-            union.getSet().addAll(providedSet.getSet());
+            Set<EmptySet> s = new HashSet<>(getList());
+            s.addAll(providedSet.getList());
+            union.getList().addAll(s);
             return union;
         }
 
@@ -141,6 +147,8 @@ public class StackSet {
     private int processOp(final OP op) {
         switch (op) {
             case ADD: {
+                //ADD will pop the stack twice, add the first set to the second one,
+                // and then push the resulting set on the stack.
                 EmptySet top = deque.pop();
                 EmptySet next = deque.pop();
                 next.add(top);
